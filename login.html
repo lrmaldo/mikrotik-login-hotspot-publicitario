@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Publicitario Mikrotik</title>
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" href="style.css">
+
+
+  <style>
+    /* Estilo personalizado */
+    #timer {
+      font-weight: bold;
+      color: #D90000;
+      /* Color primario */
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+  <!-- Contenedor principal -->
+  <div class="bg-white shadow-md rounded-lg p-6 max-w-md w-full border-t-4 border-b-4 border-red-600">
+    <!-- Título -->
+    <h1 class="text-xl font-bold text-center text-gray-700 mb-4">
+      <!-- Bienvenido a la mejor red social -->
+    </h1>
+
+    <!-- logotipo de la carpeta img archivo logo-header.png -->
+    <div class="flex justify-center mb-4">
+      <img src="/img/logo-header.png" alt="Logotipo" class="w-1/2 h-auto">
+    </div>
+
+    <!-- Campo de ingreso de PIN -->
+    <!-- form mikrotik -->
+
+    $(if chap-id)
+    <form name="sendin" action="$(link-login-only)" method="post">
+      <input type="hidden" name="username" />
+      <input type="hidden" name="password" />
+      <input type="hidden" name="dst" value="$(link-orig)" />
+      <input type="hidden" name="popup" value="true" />
+    </form>
+
+    <script type="text/javascript" src="/md5.js"></script>
+    <script type="text/javascript">
+      <!--
+      function doLogin() {
+        document.sendin.username.value = document.login.username.value;
+        document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value + '$(chap-challenge)');
+        document.sendin.submit();
+        return false;
+      }
+      //
+      -->
+    </script>
+    $(endif)
+
+
+
+    <form name="login" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin()" $(endif)>
+      <div class="mb-4">
+        <input type="hidden" name="dst" value="$(link-orig)" />
+        <input type="hidden" name="popup" value="true" />
+        <label for="pin" class="block text-sm font-medium text-gray-600">
+          Ingresa tu PIN
+        </label>
+        <input type="text" id="pin" name="username" placeholder="XXXX" 
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm"
+          autofocus required>
+        <input autocomplete="off" name="password" type="hidden" label="false" placeholder="Password" size="0" />
+      </div>
+      <!-- if error -->
+      $(if error)
+      <div class="text-center text-red-600">
+        <p class="text-sm">$(error)</p>
+      </div>
+      $(endif)
+
+
+      <!-- Botón de Login -->
+      <button class="w-full bg-[#D90000] text-white py-2 px-4 rounded hover:bg-red-700 mb-4" type="submit">
+        Iniciar Sesión
+      </button>
+
+      <!-- Carrusel de imágenes -->
+      <div id="carousel" class="overflow-hidden rounded-lg mb-4">
+        <div class="flex transition-transform duration-500" id="carouselImages">
+          <img src="/img/imagen1.png" alt="Imagen 1" class="w-full h-auto">
+          <img src="/img/imagen2.png" alt="Imagen 2" class="w-full h-auto">
+          <img src="/img/imagen3.png" alt="Imagen 3" class="w-full h-auto">
+          <img src="/img/imagen4.png" alt="Imagen 3" class="w-full h-auto">
+        </div>
+      </div>
+
+      <!-- Botón con cuenta regresiva -->
+      $(if trial == 'yes')
+      <div class="text-center">
+        <a id="freeButton"
+          class="w-full bg-[#D90000] text-[#FFFFFF] py-2 px-4 rounded opacity-50 cursor-not-allowed pointer-events-none"
+          href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">
+          Obtener 10 minutos gratis
+        </a>
+        <p class="mt-2 text-sm text-gray-600">
+          Espera <span id="timer">10</span> segundos
+        </p>
+      </div>
+      $(endif)
+    </form>
+
+    <!-- Imagen de WiFi gratis -->
+
+    <div class="flex justify-center mb-4">
+      <img src="/img/free-wifi-logo.jpg" alt="WiFi Spot" class="w-1/4 h-auto">
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <!-- Scripts -->
+
+  $(if chap-id)
+  <script type="text/javascript" src="md5.js"></script>
+  <script type="text/javascript">
+    $('#loginForm').submit(function () {
+      var password = $('#inputPassword');
+      password.val(hexMD5('$(chap-id)' + password.val() + '$(chap-challenge)'));
+    });
+  </script>
+  $(endif)
+  <script>
+    // Carrusel automático
+    let currentIndex = 0;
+    const images = document.getElementById('carouselImages');
+    const totalImages = images.children.length;
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % totalImages;
+      images.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }, 3000);
+
+    /* obtener las imagenes que estan en la carpeta img y ponerlo en el div  */
+    const imagenes = document.getElementById('imagenes');
+
+
+    // Temporizador para el botón gratis
+    let timeLeft = 10;
+    const timer = document.getElementById('timer');
+    const freeButton = document.getElementById('freeButton');
+
+    const countdown = setInterval(() => {
+      timeLeft--;
+      timer.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        // Habilitar el enlace
+        freeButton.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+        freeButton.classList.add('hover:bg-red-700'); // Agregar efecto hover al activarse
+      }
+    }, 1000);
+  </script>
+
+</body>
+
+</html>
