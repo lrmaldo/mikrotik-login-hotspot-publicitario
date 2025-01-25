@@ -99,7 +99,8 @@
       <div class="text-center">
         <a id="freeButton"
           class="w-full bg-[#D90000] text-[#FFFFFF] py-2 px-4 rounded opacity-50 cursor-not-allowed pointer-events-none"
-          href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">
+          href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)"
+          onclick="return false;">
           Obtener 10 minutos gratis
         </a>
         <p class="mt-2 text-sm text-gray-600">
@@ -112,7 +113,7 @@
     <!-- Imagen de WiFi gratis -->
 
     <div class="flex justify-center mb-4">
-      <img src="/img/free-wifi-logo.jpg" alt="WiFi Spot" class="w-1/4 h-auto">
+      <img src="/img/free-wifi-logo.jpg" alt="WiFi Spot" class="w-1/4 h-3">
     </div>
 
   </div>
@@ -160,7 +161,8 @@
       if (timeLeft <= 0) {
         clearInterval(countdown);
         // Habilitar el enlace
-        freeButton.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+        freeButton.classList.add('hover:bg-red-700'); // Agregar efecto hover al activarse
+        freeButton.onclick = null; // Remove the onclick event to enable the link
         freeButton.classList.add('hover:bg-red-700'); // Agregar efecto hover al activarse
       }
     }, 1000);
